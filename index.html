@@ -10,37 +10,42 @@
     </head>
     <body>
         <div class='container'>
+            <div id='players' onloadeddata="initializeTurn()">
+                Player Turn: 
+                <div id='black'>Black</div>
+                <div id='yellow'>Yellow</div>
+            </div>
             <table>
                 <tr>
-                    <td class='box hello' id='r1c1' onmouseout="mouseoutFunction(this)" onmouseover="mouseoverFunction(this)">
+                    <td class='box' id='r1c1' onclick="boxDblClick(this)" onmouseout="mouseoutFunction(this)" onmouseover="mouseoverFunction(this)">
                         
                     </td>
-                    <td class='box' id='r1c2'  onmouseout="mouseoutFunction(this)" onmouseover="mouseoverFunction(this)">
+                    <td class='box' id='r1c2' onclick="boxDblClick(this)"  onmouseout="mouseoutFunction(this)" onmouseover="mouseoverFunction(this)">
                         
                     </td>
-                    <td class='box' id='r1c3'  onmouseout="mouseoutFunction(this)" onmouseover="mouseoverFunction(this)">
-                        
-                    </td>
-                </tr>
-                <tr>
-                    <td class='box' id='r2c1'  onmouseout="mouseoutFunction(this)" onmouseover="mouseoverFunction(this)">
-                        
-                    </td>
-                    <td class='box' id='r2c2'  onmouseout="mouseoutFunction(this)" onmouseover="mouseoverFunction(this)">
-                        
-                    </td>
-                    <td class='box' id='r2c3'  onmouseout="mouseoutFunction(this)" onmouseover="mouseoverFunction(this)">
+                    <td class='box' id='r1c3' onclick="boxDblClick(this)"  onmouseout="mouseoutFunction(this)" onmouseover="mouseoverFunction(this)">
                         
                     </td>
                 </tr>
                 <tr>
-                    <td class='box' id='r3c1'  onmouseout="mouseoutFunction(this)" onmouseover="mouseoverFunction(this)">
+                    <td class='box' id='r2c1' onclick="boxDblClick(this)"  onmouseout="mouseoutFunction(this)" onmouseover="mouseoverFunction(this)">
                         
                     </td>
-                    <td class='box' id='r3c2'  onmouseout="mouseoutFunction(this)" onmouseover="mouseoverFunction(this)">
+                    <td class='box' id='r2c2' onclick="boxDblClick(this)"  onmouseout="mouseoutFunction(this)" onmouseover="mouseoverFunction(this)">
                         
                     </td>
-                    <td class='box' id='r3c3'  onmouseout="mouseoutFunction(this)" onmouseover="mouseoverFunction(this)">
+                    <td class='box' id='r2c3' onclick="boxDblClick(this)"  onmouseout="mouseoutFunction(this)" onmouseover="mouseoverFunction(this)">
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td class='box' id='r3c1' onclick="boxDblClick(this)"  onmouseout="mouseoutFunction(this)" onmouseover="mouseoverFunction(this)">
+                        
+                    </td>
+                    <td class='box' id='r3c2' onclick="boxDblClick(this)"  onmouseout="mouseoutFunction(this)" onmouseover="mouseoverFunction(this)">
+                        
+                    </td>
+                    <td class='box' id='r3c3' onclick="boxDblClick(this)"  onmouseout="mouseoutFunction(this)" onmouseover="mouseoverFunction(this)">
                         
                     </td>
                 </tr>
