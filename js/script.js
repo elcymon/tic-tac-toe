@@ -78,8 +78,48 @@ let boxDblClick = (x) => {
         x.style.backgroundColor = turnInfo.played;
         board[boxLoc[0]][boxLoc[1]] = turnInfo.played;
 
-
+        //check if there is a winner
+        let winCheck =  checkWinner();
+        if( winCheck !== null)
+        {
+            console.log('Winner is ' + winCheck);
+        }
         changeTurn(turnInfo);//highlight which player's turn it is
     }
     // console.log(board);
+}
+
+let checkWinner = () => {
+    //function performs all checks to search for a winner
+    let winner = null;
+    
+    //perform horizontal check
+    winner = checkHorizontalWin();
+
+    //perform vertical check
+
+    //perform diagonal check
+
+    //return result
+    return winner;
+}
+
+let checkHorizontalWin = () => {
+    //function checks for win on each row of the board and returns winning color
+    // else it returns null if no win occurs.
+    let win = null;
+    board.forEach( (row, index) => {
+        //console.log(index,row.join(''));
+        if (players.p1+players.p1+players.p1 === row.join('')) {
+            win = players.p1;
+            return win;
+        }
+        else if (players.p2 + players.p2 + players.p2 === row.join('')) {
+            win = players.p2;
+            return win;
+        }
+
+    });
+
+    return win;//no player has won
 }
