@@ -8,14 +8,28 @@
         <link rel='stylesheet' type='text/css' media='screen' href='css/style.css'>
         
     </head>
-    <body>
+    <body onload="initializeGame()">
         <div class='container'>
-            <div id='players' onloadeddata="initializeTurn()">
+            <div id='players'>
                 Player Turn: 
-                <div id='black'>Black</div>
-                <div id='yellow'>Yellow</div>
+                <div id='black'>
+                    <div class = 'playerName'>
+                        Black
+                    </div>
+                    <div class = 'playerScore'>
+                        0
+                    </div>
+                </div>
+                <div id='yellow'>
+                    <div class = 'playerName'>
+                        Yellow
+                    </div>
+                    <div class = 'playerScore'>
+                        0
+                    </div>
+                </div>
             </div>
-            <table>
+            <table id ='board'>
                 <tr>
                     <td class='box' id='r1c1' onclick="boxDblClick(this)" onmouseout="mouseoutFunction(this)" onmouseover="mouseoverFunction(this)">
                         

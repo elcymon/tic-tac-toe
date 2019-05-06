@@ -1,9 +1,3 @@
-// board layout for the tic-tac-toe
-let board = [
-    ['','',''],
-    ['','',''],
-    ['','',''],
-];
 
 // players object to hold player1, and player2 
 let players = {
@@ -12,7 +6,25 @@ let players = {
     'turn': true //true if p1, false if p2.
 };
 
+// board layout for the tic-tac-toe
+let board = null;
 
+let emptyBoardDOM = null;
+
+
+let initializeGame = () => {
+    emptyBoardDOM = document.getElementById('board').cloneNode(true);
+    board = resetBoard();
+
+}
+
+let resetBoard = () => {
+    return [
+        ['','',''],
+        ['','',''],
+        ['','',''],
+    ];
+}
 
 let getRowCol = (boxID) => {
     //return the row and column location of interest based on value of boxID string
@@ -22,6 +34,7 @@ let getRowCol = (boxID) => {
     
     return [boxRow, boxCol];
 }
+
 let mouseoverFunction = (x) => {
     //handle behaviour or cell when onmouseover event is triggered
     let boxLoc = getRowCol(x.id);
@@ -43,7 +56,7 @@ function mouseoutFunction(x) {
 }
 function changeTurn(info) {
     // handles change of turn behaviour after a players' turn
-    document.getElementById(info.nextPlayer).style.backgroundColor = info.nextPlayer;
+    document.getElementById(info.nextPlayer).style.backgroundColor = 'green';
     document.getElementById(info.played).style.backgroundColor = 'blueviolet';
 }
 
@@ -83,6 +96,9 @@ let boxDblClick = (x) => {
         if( winCheck !== null)
         {
             console.log('Winner is ' + winCheck);
+            //alert('Winner is ' + winCheck + '. Press OK to restart');
+            board = resetBoard();
+            document.getElementById('board').innerHTML = emptyBoardDOM.innerHTML;
         }
         changeTurn(turnInfo);//highlight which player's turn it is
     }
@@ -93,13 +109,21 @@ let checkWinner = () => {
     //function performs all checks to search for a winner
     let winner = null;
     
+
     //perform horizontal check
     winner = checkHorizontalWin();
+    if(winner === null) {//if no horizontal win, do vertical check
+        //perform vertical check
+        winner = checkVerticalWin();
 
-    //perform vertical check
+        if(winner === null) {//if no vertical win, do diagonal check
+            //perform diagonal check
+        
+        }
+    }
 
-    //perform diagonal check
-
+    
+    
     //return result
     return winner;
 }
@@ -108,18 +132,49 @@ let checkHorizontalWin = () => {
     //function checks for win on each row of the board and returns winning color
     // else it returns null if no win occurs.
     let win = null;
-    board.forEach( (row, index) => {
+    for (var index = 0; index < board.length; index++) {
         //console.log(index,row.join(''));
+        let row = board[index];
+
         if (players.p1+players.p1+players.p1 === row.join('')) {
             win = players.p1;
-            return win;
+            break;
         }
         else if (players.p2 + players.p2 + players.p2 === row.join('')) {
             win = players.p2;
-            return win;
+            break;
         }
 
-    });
+    }
 
     return win;//no player has won
+}
+
+let checkVerticalWin = () => {
+    /* check for win on each column of the board and returns winning color
+        else return null if no win occurs.
+    */
+    let win = null;
+    let nCols = board[0].length;//number of columns
+    for (var c = 0; c < nCols; c++){
+        //loop through columns
+        let col = '';
+        for (var r = 0; r < board.length; r++) {
+            //loop through the rows
+            col = col + board[r][c];
+    
+        }
+        if (players.p1+players.p1+players.p1 === col) {
+            win = players.p1;
+            break;
+        }
+        else if (players.p2 + players.p2 + players.p2 === col) {
+            win = players.p2;
+            break;
+        }
+
+    }
+
+    return win;
+    
 }
