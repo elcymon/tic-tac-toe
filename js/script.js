@@ -12,13 +12,13 @@ let board = null;
 let emptyBoardDOM = null;
 
 
-let initializeGame = () => {
+const initializeGame = () => {
     emptyBoardDOM = document.getElementById('board').cloneNode(true);
     board = resetBoard();
 
 }
 
-let resetBoard = () => {
+const resetBoard = () => {
     return [
         ['','',''],
         ['','',''],
@@ -26,7 +26,7 @@ let resetBoard = () => {
     ];
 }
 
-let getRowCol = (boxID) => {
+const getRowCol = (boxID) => {
     //return the row and column location of interest based on value of boxID string
     //box id is of form rRcC, where R and C are from ID of HTML
     let boxRow = parseInt(boxID[1])-1;
@@ -35,7 +35,7 @@ let getRowCol = (boxID) => {
     return [boxRow, boxCol];
 }
 
-let mouseoverFunction = (x) => {
+const mouseoverFunction = (x) => {
     //handle behaviour or cell when onmouseover event is triggered
     let boxLoc = getRowCol(x.id);
     if ( board[boxLoc[0]][boxLoc[1]] === '' ){
@@ -60,7 +60,7 @@ function changeTurn(info) {
     document.getElementById(info.played).style.backgroundColor = 'blueviolet';
 }
 
-let boxDblClick = (x) => {
+const boxDblClick = (x) => {
     // handles onclick event for each cell on the board
     let boxLoc = getRowCol(x.id);//get row and col clicked
     if ( board[boxLoc[0]][boxLoc[1]] === '' ) {//only trigger clicks on cells that are empty
@@ -92,7 +92,7 @@ let boxDblClick = (x) => {
         board[boxLoc[0]][boxLoc[1]] = turnInfo.played;
 
         //check if there is a winner
-        let winCheck =  checkWinner();
+        let winCheck =  checkWinner(board,players);
         if( winCheck !== null)
         {
             console.log('Winner is ' + winCheck);
@@ -105,16 +105,16 @@ let boxDblClick = (x) => {
     // console.log(board);
 }
 
-let checkWinner = () => {
+const checkWinner = (board,players) => {
     //function performs all checks to search for a winner
     let winner = null;
     
 
     //perform horizontal check
-    winner = checkHorizontalWin();
+    winner = checkHorizontalWin(board,players);
     if(winner === null) {//if no horizontal win, do vertical check
         //perform vertical check
-        winner = checkVerticalWin();
+        winner = checkVerticalWin(board,players);
 
         if(winner === null) {//if no vertical win, do diagonal check
             //perform diagonal check
@@ -128,7 +128,7 @@ let checkWinner = () => {
     return winner;
 }
 
-let checkHorizontalWin = () => {
+const checkHorizontalWin = (board,players) => {
     //function checks for win on each row of the board and returns winning color
     // else it returns null if no win occurs.
     let win = null;
@@ -150,7 +150,7 @@ let checkHorizontalWin = () => {
     return win;//no player has won
 }
 
-let checkVerticalWin = () => {
+const checkVerticalWin = (board,players) => {
     /* check for win on each column of the board and returns winning color
         else return null if no win occurs.
     */
@@ -178,3 +178,18 @@ let checkVerticalWin = () => {
     return win;
     
 }
+
+const checkDiagonalWin = (board,players) => {
+    // check for win on both left and right diagonals.
+    // Returns name of winner else returns null if no winner is found
+}
+//  exporting functions for testing
+module.exports = {
+                    players: players,
+                    resetBoard: resetBoard,
+                    getRowCol: getRowCol,
+                    checkWinner: checkWinner,
+                    checkHorizontalWin: checkHorizontalWin,
+                    checkVerticalWin: checkVerticalWin,
+                    checkDiagonalWin: checkDiagonalWin,
+                };

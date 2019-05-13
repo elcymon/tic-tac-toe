@@ -4,7 +4,8 @@
   "description": "tic tac toe game ",
   "main": "js/script.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "testwatch": "jest --watchAll"
   },
   "repository": {
     "type": "git",
