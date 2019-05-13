@@ -1,4 +1,3 @@
-
 // players object to hold player1, and player2 
 let players = {
     'p1': 'black',
@@ -93,6 +92,8 @@ const boxDblClick = (x) => {
 
         //check if there is a winner
         let winCheck =  checkWinner(board,players);
+        // console.log('winCheck is ' + winCheck);
+        
         if( winCheck !== null)
         {
             console.log('Winner is ' + winCheck);
@@ -112,13 +113,15 @@ const checkWinner = (board,players) => {
 
     //perform horizontal check
     winner = checkHorizontalWin(board,players);
+    // console.log('horizontal winner ' + winner);
     if(winner === null) {//if no horizontal win, do vertical check
         //perform vertical check
         winner = checkVerticalWin(board,players);
-
+        // console.log('vertical winner ' + winner);
         if(winner === null) {//if no vertical win, do diagonal check
             //perform diagonal check
-        
+            winner = checkDiagonalWin(board,players);
+            // console.log('diagonal winner ' + winner);
         }
     }
 
@@ -127,7 +130,16 @@ const checkWinner = (board,players) => {
     //return result
     return winner;
 }
-
+const winChecker = (player,col) => {
+    //checks if player string occurs 3 consecutive times in col
+    //return true if it does, else return false
+    if (player + player + player === col){
+        return true;
+    }
+    else {
+        return false;
+    }
+}
 const checkHorizontalWin = (board,players) => {
     //function checks for win on each row of the board and returns winning color
     // else it returns null if no win occurs.
@@ -136,11 +148,11 @@ const checkHorizontalWin = (board,players) => {
         //console.log(index,row.join(''));
         let row = board[index];
 
-        if (players.p1+players.p1+players.p1 === row.join('')) {
+        if (winChecker(players.p1, row.join(''))) {
             win = players.p1;
             break;
         }
-        else if (players.p2 + players.p2 + players.p2 === row.join('')) {
+        else if (winChecker(players.p2, row.join(''))) {
             win = players.p2;
             break;
         }
@@ -164,11 +176,11 @@ const checkVerticalWin = (board,players) => {
             col = col + board[r][c];
     
         }
-        if (players.p1+players.p1+players.p1 === col) {
+        if (winChecker(players.p1, col)) {
             win = players.p1;
             break;
         }
-        else if (players.p2 + players.p2 + players.p2 === col) {
+        else if (winChecker(players.p2, col)) {
             win = players.p2;
             break;
         }
@@ -182,6 +194,39 @@ const checkVerticalWin = (board,players) => {
 const checkDiagonalWin = (board,players) => {
     // check for win on both left and right diagonals.
     // Returns name of winner else returns null if no winner is found
+    let win = null;
+    //left diagonal
+    let col = '';
+    for (var c = 0; c < board.length; c++){
+        col = col + board[c][c];
+    }
+    if (winChecker(players.p1, col)) {
+        win = players.p1;
+    }
+    else if (winChecker(players.p2, col)) {
+        win = players.p2;
+    }
+    else {//no win on left diagonal do right diagonal check
+        col = '';//reset col
+        var r = 0;
+        for (var c = board.length - 1; c >= 0; c--) {
+                col = col + board[r][c];
+                r++;
+        }
+
+        if (winChecker(players.p1, col)) {
+            win = players.p1;
+        }
+        else if (winChecker(players.p2, col)) {
+            win = players.p2;
+        }
+    }
+    return win;
+}
+const checkNoWin = (board) => {
+    var flatBoard = board.flat();
+
+    return !flatBoard.includes('');
 }
 //  exporting functions for testing
 module.exports = {
@@ -192,4 +237,5 @@ module.exports = {
                     checkHorizontalWin: checkHorizontalWin,
                     checkVerticalWin: checkVerticalWin,
                     checkDiagonalWin: checkDiagonalWin,
+                    checkNoWin: checkNoWin,
                 };
