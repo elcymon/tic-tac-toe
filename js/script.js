@@ -9,14 +9,31 @@ let players = {
 let board = null;
 
 let emptyBoardDOM = null;
-
+//variable to store name of winner
+let winCheck = null;
 
 const initializeGame = () => {
     emptyBoardDOM = document.getElementById('board').cloneNode(true);
     board = resetBoard();
 
 }
+const replayGame = () => {
+    //reset game to inital state
+    board = resetBoard();
+    document.getElementById('board').innerHTML = emptyBoardDOM.innerHTML;
 
+    // reset players
+    players.turn = true;
+
+    //reset winCheck to default
+    winCheck = null;
+}
+
+const resetScore = () => {
+    //reset board and DOM
+    replayGame();
+    //reset score count
+}
 const resetBoard = () => {
     return [
         ['','',''],
@@ -37,7 +54,7 @@ const getRowCol = (boxID) => {
 const mouseoverFunction = (x) => {
     //handle behaviour or cell when onmouseover event is triggered
     let boxLoc = getRowCol(x.id);
-    if ( board[boxLoc[0]][boxLoc[1]] === '' ){
+    if ( board[boxLoc[0]][boxLoc[1]] === '' && winCheck === null){
         x.style.backgroundColor = 'white';
     }
     
@@ -47,7 +64,7 @@ const mouseoverFunction = (x) => {
 function mouseoutFunction(x) {
     // handle behaviour of cell when onmouseout event is triggered
     let boxLoc = getRowCol(x.id);
-    if ( board[boxLoc[0]][boxLoc[1]] === '' ) {
+    if ( board[boxLoc[0]][boxLoc[1]] === '' && winCheck === null) {
         x.style.backgroundColor = 'blueviolet';
     }
     // x.style.borderRadius = '50%';
@@ -62,7 +79,9 @@ function changeTurn(info) {
 const boxDblClick = (x) => {
     // handles onclick event for each cell on the board
     let boxLoc = getRowCol(x.id);//get row and col clicked
-    if ( board[boxLoc[0]][boxLoc[1]] === '' ) {//only trigger clicks on cells that are empty
+    if ( board[boxLoc[0]][boxLoc[1]] === '' && winCheck === null) {
+        //only trigger clicks on cells that are empty
+        //only trigger when no winner has been found
         played = '';
         if(players.turn){//if true, player1 has played its turn
             
@@ -91,16 +110,10 @@ const boxDblClick = (x) => {
         board[boxLoc[0]][boxLoc[1]] = turnInfo.played;
 
         //check if there is a winner
-        let winCheck =  checkWinner(board,players);
+        winCheck =  checkWinner(board,players);
         // console.log('winCheck is ' + winCheck);
         
-        if( winCheck !== null)
-        {
-            console.log('Winner is ' + winCheck);
-            //alert('Winner is ' + winCheck + '. Press OK to restart');
-            board = resetBoard();
-            document.getElementById('board').innerHTML = emptyBoardDOM.innerHTML;
-        }
+        
         changeTurn(turnInfo);//highlight which player's turn it is
     }
     // console.log(board);
